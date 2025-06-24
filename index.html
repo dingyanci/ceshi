@@ -69,13 +69,13 @@
         const socialApps = {
             facebook: {
                 name: 'Facebook',
-                scheme: 'fb://share?link='+ encodeURIComponent(window.location.href)+'&quote=分享内容'+'&text=内容',
+                scheme: 'fb://share?link='+ encodeURIComponent(window.location.href)+'&quote='+encodeURIComponent('分享内容')+'&text='+encodeURIComponent('内容'),
                 webUrl: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href),
                 btnId: 'facebook-btn'
             },
             twitter: {
                 name: 'Twitter',
-                scheme: 'twitter://post?message=' + encodeURIComponent('分享内容') + '&url=' + encodeURIComponent(window.location.href),
+                scheme: 'twitter://post?url='+ encodeURIComponent(window.location.href),
                 webUrl: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent('分享内容') + '&url=' + encodeURIComponent(window.location.href),
                 btnId: 'twitter-btn'
             },
