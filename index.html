@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社交媒体分享</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .share-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .share-btn:hover {
+            opacity: 0.8;
+        }
+        #facebook-btn {
+            background-color: #1877f2;
+        }
+        #twitter-btn {
+            background-color: #1da1f2;
+        }
+        #instagram-btn {
+            background-color: #e1306c;
+        }
+        #youtube-btn {
+            background-color: #ff0000;
+        }
+        #share-all-btn {
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <h1>社交媒体分享</h1>
+    <p>点击下方按钮分享内容到社交媒体</p>
+    
+    <div class="btn-container">
+        <button id="facebook-btn" class="share-btn">分享到 Facebook</button>
+        <button id="twitter-btn" class="share-btn">分享到 Twitter</button>
+        <button id="instagram-btn" class="share-btn">分享到 Instagram</button>
+        <button id="youtube-btn" class="share-btn">分享到 YouTube</button>
+        <button id="zhihu-btn" class="share-btn">分享到 zhihu</button>
+        <button id="share-all-btn" class="share-btn">一键分享到所有平台</button>
+    </div>
+
+    <script>
+        // 社交媒体应用配置
+        const socialApps = {
+            facebook: {
+                name: 'Facebook',
+                scheme: 'fb://share?text=分享内容',
+                webUrl: 'https://www.facebook.com/sharer/sharer.php?u=' + 'https://www.jd.com/',
+                btnId: 'facebook-btn'
+            },
+            twitter: {
+                name: 'Twitter',
+                scheme: 'twitter://post?message=分享内容',
+                webUrl: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent('分享内容') + '&url=' + 'https://www.jd.com/',
+                btnId: 'twitter-btn'
+            },
+            instagram: {
+                name: 'Instagram',
+                scheme: 'instagram://app',
+                webUrl: 'https://www.instagram.com/',
+                btnId: 'instagram-btn'
+            },
+            youtube: {
+                name: 'YouTube',
+                scheme: 'youtube://',
+                webUrl: 'https://www.youtube.com/',
+                btnId: 'youtube-btn'
+            },
+            youtube: {
+                name: 'zhihu',
+                scheme: 'zhihu://',
+                webUrl: 'https://www.zhihu.com/',
+                btnId: 'zhihu-btn'
+            }
+        };
+
+        // 检测并打开社交媒体应用或网页
+        function openSocialMedia(app) {
+            // 尝试打开应用
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = app.scheme;
+            document.body.appendChild(iframe);
+
+            // 设置超时检测
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+                
+                // 如果应用未安装，则打开网页版
+                if (!document.hidden) {
+                    window.open(app.webUrl, '_blank');
+                }
+            }, 500);
+        }
+
+        // 为每个按钮添加点击事件
+        Object.values(socialApps).forEach(app => {
+            document.getElementById(app.btnId).addEventListener('click', () => {
+                openSocialMedia(app);
+            });
+        });
+
+        // 一键分享到所有平台
+        document.getElementById('share-all-btn').addEventListener('click', () => {
+            Object.values(socialApps).forEach(app => {
+                setTimeout(() => {
+                    openSocialMedia(app);
+                }, 300); // 添加延迟以避免弹出窗口被阻止
+            });
+        });
+
+        // 页面加载完成后显示按钮
+        window.addEventListener('load', () => {
+            document.querySelector('.btn-container').style.opacity = 1;
+        });
+    </script>
+</body>
+</html>
