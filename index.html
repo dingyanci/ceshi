@@ -59,8 +59,6 @@
         <button id="twitter-btn" class="share-btn">分享到 Twitter</button>
         <button id="instagram-btn" class="share-btn">分享到 Instagram</button>
         <button id="youtube-btn" class="share-btn">分享到 YouTube</button>
-        <button id="zhihu-btn" class="share-btn">分享到 zhihu</button>
-        <button id="share-all-btn" class="share-btn">一键分享到所有平台</button>
     </div>
 
     <script>
@@ -69,13 +67,13 @@
             facebook: {
                 name: 'Facebook',
                 scheme: 'fb://share?text=分享内容',
-                webUrl: 'https://www.facebook.com/sharer/sharer.php?u=' + 'https://www.jd.com/',
+                webUrl: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href),
                 btnId: 'facebook-btn'
             },
             twitter: {
                 name: 'Twitter',
                 scheme: 'twitter://post?message=分享内容',
-                webUrl: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent('分享内容') + '&url=' + 'https://www.jd.com/',
+                webUrl: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent('分享内容') + '&url=' + encodeURIComponent(window.location.href),
                 btnId: 'twitter-btn'
             },
             instagram: {
@@ -89,12 +87,6 @@
                 scheme: 'youtube://',
                 webUrl: 'https://www.youtube.com/',
                 btnId: 'youtube-btn'
-            },
-            youtube: {
-                name: 'zhihu',
-                scheme: 'zhihu://',
-                webUrl: 'https://www.zhihu.com/',
-                btnId: 'zhihu-btn'
             }
         };
 
@@ -123,16 +115,7 @@
                 openSocialMedia(app);
             });
         });
-
-        // 一键分享到所有平台
-        document.getElementById('share-all-btn').addEventListener('click', () => {
-            Object.values(socialApps).forEach(app => {
-                setTimeout(() => {
-                    openSocialMedia(app);
-                }, 300); // 添加延迟以避免弹出窗口被阻止
-            });
-        });
-
+        
         // 页面加载完成后显示按钮
         window.addEventListener('load', () => {
             document.querySelector('.btn-container').style.opacity = 1;
