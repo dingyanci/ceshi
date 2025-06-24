@@ -75,7 +75,7 @@
             },
             twitter: {
                 name: 'Twitter',
-                scheme: 'twitter://post?message=分享内容',
+                scheme: 'twitter://post?message=分享内容&u='+encodeURIComponent(window.location.href),
                 webUrl: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent('分享内容') + '&url=' + encodeURIComponent(window.location.href),
                 btnId: 'twitter-btn'
             },
