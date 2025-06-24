@@ -69,7 +69,7 @@
         const socialApps = {
             facebook: {
                 name: 'Facebook',
-                scheme: 'fb://share?text=分享内容',
+                scheme: 'fb://share?u='+ encodeURIComponent(window.location.href),
                 webUrl: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href),
                 btnId: 'facebook-btn'
             },
