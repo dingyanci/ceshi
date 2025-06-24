@@ -69,7 +69,7 @@
         const socialApps = {
             facebook: {
                 name: 'Facebook',
-                scheme: 'fb://publish?u='+ encodeURIComponent(window.location.href),
+                scheme: 'fb://share?u='+ encodeURIComponent(window.location.href),
                 webUrl: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href),
                 btnId: 'facebook-btn'
             },
@@ -87,8 +87,8 @@
             },
             youtube: {
                 name: 'YouTube',
-                scheme: 'youtube://',
-                webUrl: 'https://www.youtube.com/',
+                scheme: 'youtube://upload',
+                webUrl: 'https://www.youtube.com/upload',
                 btnId: 'youtube-btn'
             }
         };
