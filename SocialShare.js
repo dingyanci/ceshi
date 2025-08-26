@@ -30,11 +30,11 @@ const SocialShare = (function() {
                 text: '',
                 url: ''
             },
-            whatsapp:{
+            whatsapp: {
                 name: 'WhatsApp',
-                scheme: 'https://api.whatsapp.com/send?text={text} {url}',
-                webUrl: 'https://web.whatsapp.com/',
-                text: 'WhatsApp分享这个内容',
+                scheme: 'whatsapp://send?text={text} {url}',
+                webUrl: 'https://web.whatsapp.com/send?text={text} {url}',
+                text: '分享这个内容',
                 url: window.location.href
             }
         },
@@ -107,5 +107,6 @@ const SocialShare = (function() {
         share
     };
 })();
+
 
 
