@@ -49,7 +49,7 @@ const SocialShare = (function() {
      * 初始化分享库
      * @param {Object} userConfig 用户自定义配置
      */
-    function actinit(userConfig = {}) {
+    function init(userConfig = {}) {
         // 合并配置
         config = {
             ...defaultConfig,
@@ -186,6 +186,7 @@ const SocialShare = (function() {
 document.addEventListener('DOMContentLoaded', () => {
     SocialShare.init();
 });
+
 
 
 
