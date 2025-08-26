@@ -1,44 +1,19 @@
-/**
- * 简易社交媒体分享库
- * 功能：支持Facebook(官方API)、Twitter、Instagram、YouTube和WhatsApp的分享
- */
-
 const SocialShare = (function() {
     // 默认配置
     let config = {
         platforms: {
             facebook: {
                 name: 'Facebook',
-                // 官方API分享方式
-                share: function(options = {}) {
-                    if (typeof FB !== 'undefined') {
-                        FB.ui({
-                            method: 'share',
-                            href: options.url || this.url,
-                            quote: options.text || this.text,
-                            hashtag: options.hashtag || '#分享'
-                        }, function(response) {
-                            console.log('Facebook分享结果:', response);
-                        });
-                    } else {
-                        // 回退到URL方案
-                        const url = encodeURIComponent(options.url || this.url);
-                        const text = encodeURIComponent(options.text || this.text);
-                        const webUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`;
-                        window.open(webUrl, '_blank');
-                    }
-                },
-                // 保留原有URL方案作为回退
                 scheme: 'fb://share?text={text}&link={url}',
                 webUrl: 'https://www.facebook.com/sharer/sharer.php?u={url}',
-                text: '分享这个内容',
+                text: 'facebook分享这个内容',
                 url: window.location.href
             },
             twitter: {
                 name: 'Twitter',
                 scheme: 'twitter://post?message={text} {url}',
                 webUrl: 'https://twitter.com/intent/tweet?text={text}&url={url}',
-                text: '看看这个',
+                text: 'twitter看看这个',
                 url: window.location.href
             },
             instagram: {
@@ -63,35 +38,9 @@ const SocialShare = (function() {
                 url: window.location.href
             }
         },
-        timeout: 800,
-        fbAppId: '' // 新增Facebook应用ID配置
+        timeout: 800 // 检测应用是否安装的超时时间(毫秒)
     };
-
-    /**
-     * 初始化Facebook SDK
-     */
-    function initFacebookSDK() {
-        if (!config.fbAppId) return;
-        
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId: config.fbAppId,
-                cookie: true,
-                xfbml: true,
-                version: 'v18.0'
-            });
-        };
-
-        (function(d, s, id){
-            if (d.getElementById(id)) return;
-            const fjs = d.getElementsByTagName(s)[0];
-            const js = d.createElement(s);
-            js.id = id;
-            js.src = "https://connect.facebook.net/zh_CN/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    }
-
+    
     /**
      * 更新平台配置
      * @param {string} platform 平台名称
@@ -119,21 +68,14 @@ const SocialShare = (function() {
     /**
      * 分享到指定平台
      * @param {string} platform 平台名称
-     * @param {Object} options 分享选项
      */
-    function share(platform, options = {}) {
+    function share(platform) {
         const app = config.platforms[platform];
         if (!app) return;
 
-        // 特殊处理Facebook官方API
-        if (platform === 'facebook' && typeof app.share === 'function') {
-            app.share(options);
-            return;
-        }
-
-        // 其他平台保持原有逻辑
-        const finalUrl = encodeURIComponent(options.url || app.url);
-        const finalText = encodeURIComponent(options.text || app.text || '');
+        // 替换模板变量
+        const finalUrl = encodeURIComponent(app.url || window.location.href);
+        const finalText = encodeURIComponent(app.text || '');
         
         const scheme = app.scheme
             .replace(/{url}/g, finalUrl)
@@ -149,36 +91,22 @@ const SocialShare = (function() {
         iframe.src = scheme;
         document.body.appendChild(iframe);
 
+        // 设置超时检测
         setTimeout(() => {
             document.body.removeChild(iframe);
             if (!document.hidden) {
-                window.open(webUrl, '_blank');
+                window.open(webUrl, '_blank'); // 回退到网页版
             }
         }, config.timeout);
     }
 
-    /**
-     * 初始化分享库
-     * @param {Object} userConfig 用户配置
-     */
-    function init(userConfig = {}) {
-        Object.assign(config, userConfig);
-        if (config.fbAppId) {
-            initFacebookSDK();
-        }
-    }
-
     // 公开API
     return {
-        init,
         updatePlatform,
         updateUrl,
         share
     };
 })();
-
-
-
 
 
 // const SocialShare = (function() {
@@ -187,16 +115,36 @@ const SocialShare = (function() {
 //         platforms: {
 //             facebook: {
 //                 name: 'Facebook',
+//                 // 官方API分享方式
+//                 share: function(options = {}) {
+//                     if (typeof FB !== 'undefined') {
+//                         FB.ui({
+//                             method: 'share',
+//                             href: options.url || this.url,
+//                             quote: options.text || this.text,
+//                             hashtag: options.hashtag || '#分享'
+//                         }, function(response) {
+//                             console.log('Facebook分享结果:', response);
+//                         });
+//                     } else {
+//                         // 回退到URL方案
+//                         const url = encodeURIComponent(options.url || this.url);
+//                         const text = encodeURIComponent(options.text || this.text);
+//                         const webUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`;
+//                         window.open(webUrl, '_blank');
+//                     }
+//                 },
+//                 // 保留原有URL方案作为回退
 //                 scheme: 'fb://share?text={text}&link={url}',
 //                 webUrl: 'https://www.facebook.com/sharer/sharer.php?u={url}',
-//                 text: 'facebook分享这个内容',
+//                 text: '分享这个内容',
 //                 url: window.location.href
 //             },
 //             twitter: {
 //                 name: 'Twitter',
 //                 scheme: 'twitter://post?message={text} {url}',
 //                 webUrl: 'https://twitter.com/intent/tweet?text={text}&url={url}',
-//                 text: 'twitter看看这个',
+//                 text: '看看这个',
 //                 url: window.location.href
 //             },
 //             instagram: {
@@ -221,9 +169,35 @@ const SocialShare = (function() {
 //                 url: window.location.href
 //             }
 //         },
-//         timeout: 800 // 检测应用是否安装的超时时间(毫秒)
+//         timeout: 800,
+//         fbAppId: '' // 新增Facebook应用ID配置
 //     };
-    
+
+//     /**
+//      * 初始化Facebook SDK
+//      */
+//     function initFacebookSDK() {
+//         if (!config.fbAppId) return;
+        
+//         window.fbAsyncInit = function() {
+//             FB.init({
+//                 appId: config.fbAppId,
+//                 cookie: true,
+//                 xfbml: true,
+//                 version: 'v18.0'
+//             });
+//         };
+
+//         (function(d, s, id){
+//             if (d.getElementById(id)) return;
+//             const fjs = d.getElementsByTagName(s)[0];
+//             const js = d.createElement(s);
+//             js.id = id;
+//             js.src = "https://connect.facebook.net/zh_CN/sdk.js";
+//             fjs.parentNode.insertBefore(js, fjs);
+//         }(document, 'script', 'facebook-jssdk'));
+//     }
+
 //     /**
 //      * 更新平台配置
 //      * @param {string} platform 平台名称
@@ -251,14 +225,21 @@ const SocialShare = (function() {
 //     /**
 //      * 分享到指定平台
 //      * @param {string} platform 平台名称
+//      * @param {Object} options 分享选项
 //      */
-//     function share(platform) {
+//     function share(platform, options = {}) {
 //         const app = config.platforms[platform];
 //         if (!app) return;
 
-//         // 替换模板变量
-//         const finalUrl = encodeURIComponent(app.url || window.location.href);
-//         const finalText = encodeURIComponent(app.text || '');
+//         // 特殊处理Facebook官方API
+//         if (platform === 'facebook' && typeof app.share === 'function') {
+//             app.share(options);
+//             return;
+//         }
+
+//         // 其他平台保持原有逻辑
+//         const finalUrl = encodeURIComponent(options.url || app.url);
+//         const finalText = encodeURIComponent(options.text || app.text || '');
         
 //         const scheme = app.scheme
 //             .replace(/{url}/g, finalUrl)
@@ -274,22 +255,34 @@ const SocialShare = (function() {
 //         iframe.src = scheme;
 //         document.body.appendChild(iframe);
 
-//         // 设置超时检测
 //         setTimeout(() => {
 //             document.body.removeChild(iframe);
 //             if (!document.hidden) {
-//                 window.open(webUrl, '_blank'); // 回退到网页版
+//                 window.open(webUrl, '_blank');
 //             }
 //         }, config.timeout);
 //     }
 
+//     /**
+//      * 初始化分享库
+//      * @param {Object} userConfig 用户配置
+//      */
+//     function init(userConfig = {}) {
+//         Object.assign(config, userConfig);
+//         if (config.fbAppId) {
+//             initFacebookSDK();
+//         }
+//     }
+
 //     // 公开API
 //     return {
+//         init,
 //         updatePlatform,
 //         updateUrl,
 //         share
 //     };
 // })();
+
 
 
 
