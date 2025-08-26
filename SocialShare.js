@@ -120,6 +120,7 @@ const SocialShare = (function() {
 })();
 
 // 自动初始化
-document.addEventListener('DOMContentLoaded', () => {
-    SocialShare.init();
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//     SocialShare.init();
+// });
+
