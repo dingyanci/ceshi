@@ -11,7 +11,7 @@
     <button id="youtube-btn" class="share-btn">分享到 YouTube</button>
 </div>
 
-<script src="SocialShare.js"></script>
+<!-- <script src="SocialShare.js"></script> -->
 
     <script src="https://cdn.jsdelivr.net/npm/vconsole@latest/dist/vconsole.min.js"></script>
     <script>
@@ -27,7 +27,10 @@
             timeout: 1000, // 修改超时时间
             platforms: {
                 facebook: {
-                    scheme: 'fb://share?text=自定义分享内容' // 修改Facebook分享内容
+                    scheme: 'fb://share?text=facebook自定义分享' // 修改Facebook分享内容
+                },
+                twitter: {
+                    scheme: 'twitter://post?message=twitter分享内容' // 修改Facebook分享内容
                 }
             }
         });
@@ -179,6 +182,7 @@
 </body>
 </html>
  -->
+
 
 
 
