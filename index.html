@@ -1,25 +1,17 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>社交媒体分享示例</title>
-<!--     <style>
-        .share-container {
-            opacity: 0; /* 初始隐藏，JS会淡入 */
-        }
-        .share-btn {
-            margin: 5px;
-            padding: 8px 15px;
-            cursor: pointer;
-        }
-    </style> -->
 </head>
-<!-- <body>
-    <div class="share-container" data-social-container>
-        <button class="share-btn" data-social="facebook">分享到 Facebook</button>
-        <button class="share-btn" data-social="twitter">分享到 Twitter</button>
-        <button class="share-btn" data-social="instagram">分享到 Instagram</button>
-        <button class="share-btn" data-social="youtube">分享到 YouTube</button>
-    </div>
+<body>
+<div class="btn-container">
+    <button id="facebook-btn" class="share-btn">分享到 Facebook</button>
+    <button id="twitter-btn" class="share-btn">分享到 Twitter</button>
+    <button id="instagram-btn" class="share-btn">分享到 Instagram</button>
+    <button id="youtube-btn" class="share-btn">分享到 YouTube</button>
+</div>
+
+<script src="SocialShare.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/vconsole@latest/dist/vconsole.min.js"></script>
     <script>
@@ -29,30 +21,29 @@
     <script src="SocialShare.js"></script>
     
     <script>
-        // 可选：自定义配置
+        // 在引入SocialShare.js后，可以自定义配置
         SocialShare.init({
-            url: 'https://example.com/share-this', // 自定义分享URL
+            url: 'https://example.com/custom-url', // 自定义分享URL
+            timeout: 1000, // 修改超时时间
             platforms: {
-                youtube: {
-                    channelId: 'UCNTpsgEGxdnURsidXvLbcbA' // YouTube频道ID
-                },
                 facebook: {
-                    defaultText: '看看facebook精彩内容' // 自定义默认文本
-                },
-                twitter: {
-                    defaultText: '看看twitter精彩内容' // 自定义默认文本
-                },
-                instagram: {
-                    defaultText: '看看instagram精彩内容' // 自定义默认文本
+                    scheme: 'fb://share?text=自定义分享内容' // 修改Facebook分享内容
                 }
             }
         });
+
+        // 直接分享到Twitter
+        // SocialShare.shareTo({
+        //     name: 'Twitter',
+        //     scheme: 'twitter://post?message=自定义内容',
+        //     webUrl: 'https://twitter.com/intent/tweet?text=自定义内容&url=' + encodeURIComponent(window.location.href)
+        // });
     </script>
 </body>
-</html> --> -->
+</html>
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -187,6 +178,7 @@
     </script> -->
 </body>
 </html>
+ -->
 
 
 
