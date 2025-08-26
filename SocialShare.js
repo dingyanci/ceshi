@@ -63,7 +63,7 @@ const SocialShare = (function() {
         initButtons();
 
         // // 淡入显示按钮
-        fadeInButtons();
+        // fadeInButtons();
     }
 
     /**
@@ -109,13 +109,13 @@ const SocialShare = (function() {
     /**
      * 淡入显示分享按钮
      */
-    function fadeInButtons() {
-        const containers = document.querySelectorAll('[data-social-container]');
-        containers.forEach(container => {
-            container.style.transition = `opacity ${config.fadeInDuration}ms`;
-            container.style.opacity = 1;
-        });
-    }
+    // function fadeInButtons() {
+    //     const containers = document.querySelectorAll('[data-social-container]');
+    //     containers.forEach(container => {
+    //         container.style.transition = `opacity ${config.fadeInDuration}ms`;
+    //         container.style.opacity = 1;
+    //     });
+    // }
 
     /**
      * 分享到指定平台
@@ -186,6 +186,7 @@ const SocialShare = (function() {
 // document.addEventListener('DOMContentLoaded', () => {
 //     SocialShare.init();
 // });
+
 
 
 
