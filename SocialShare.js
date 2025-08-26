@@ -55,7 +55,7 @@ const SocialShare = (function() {
             ...defaultConfig,
             ...userConfig
         };
-        console.log(config)
+        // console.log(config)
         // 验证必要参数
         validateConfig();
 
@@ -186,6 +186,7 @@ const SocialShare = (function() {
 // document.addEventListener('DOMContentLoaded', () => {
 //     SocialShare.init();
 // });
+
 
 
 
