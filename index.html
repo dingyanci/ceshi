@@ -2,50 +2,29 @@
 <html>
 <head>
     <title>社交媒体分享示例</title>
-    <script src="SocialShare.js"></script>
 </head>
 <body>
-<div class="btn-container">
-    <button id="facebook-btn" class="share-btn">分享到 Facebook</button>
-    <button id="twitter-btn" class="share-btn">分享到 Twitter</button>
-    <button id="instagram-btn" class="share-btn">分享到 Instagram</button>
-    <button id="youtube-btn" class="share-btn">分享到 YouTube</button>
-</div>
-
-<!-- <script src="SocialShare.js"></script> -->
+    <button onclick="SocialShare.share('facebook')">分享到Facebook</button>
+    <button onclick="SocialShare.share('twitter')">分享到Twitter</button>
+    <button onclick="SocialShare.share('instagram')">分享到Instagram</button>
+    <button onclick="SocialShare.share('youtube')">分享到YouTube</button>
 
     <script src="https://cdn.jsdelivr.net/npm/vconsole@latest/dist/vconsole.min.js"></script>
     <script>
       // 初始化 vConsole
       var vConsole = new VConsole();
     </script>
-   
-    
+    <script src="SocialShare.js"></script>
     <script>
-        // 在引入SocialShare.js后，可以自定义配置
-        SocialShare.init({
-            url: 'https://example.com/custom-url', // 自定义分享URL
-            timeout: 1000, // 修改超时时间
-            platforms: {
-                facebook: {
-                    scheme: 'fb://share?text=facebook自定义分享' // 修改Facebook分享内容
-                },
-                twitter: {
-                    scheme: 'twitter://post?message=twitter分享内容' // 修改Facebook分享内容
-                }
-            }
+        // 自定义配置
+        SocialShare.updatePlatform('facebook', {
+            text: '自定义Facebook分享文本'
         });
-
-        // 直接分享到Twitter
-        // SocialShare.shareTo({
-        //     name: 'Twitter',
-        //     scheme: 'twitter://post?message=自定义内容',
-        //     webUrl: 'https://twitter.com/intent/tweet?text=自定义内容&url=' + encodeURIComponent(window.location.href)
-        // });
+        
+        SocialShare.updateUrl('https://example.com/custom-url');
     </script>
 </body>
 </html>
-
 
 <!-- <!DOCTYPE html>
 <html lang="zh-CN">
@@ -183,6 +162,7 @@
 </body>
 </html>
  -->
+
 
 
 
