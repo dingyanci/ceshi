@@ -61,9 +61,6 @@ const SocialShare = (function() {
 
         // 初始化分享按钮
         initButtons();
-
-        // 淡入显示按钮
-        fadeInButtons();
     }
 
     /**
@@ -80,15 +77,6 @@ const SocialShare = (function() {
         });
     }
 
-    /**
-     * 淡入显示分享按钮
-     */
-    function fadeInButtons() {
-        const containers = document.querySelectorAll('.btn-container');
-        containers.forEach(container => {
-            container.style.opacity = 1;
-        });
-    }
 
     /**
      * 分享到指定平台
@@ -123,4 +111,5 @@ const SocialShare = (function() {
 // document.addEventListener('DOMContentLoaded', () => {
 //     SocialShare.init();
 // });
+
 
