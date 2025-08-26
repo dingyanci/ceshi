@@ -31,7 +31,7 @@ const SocialShare = (function() {
                 url: ''
             }
         },
-        timeout: 500 // 检测应用是否安装的超时时间(毫秒)
+        timeout: 800 // 检测应用是否安装的超时时间(毫秒)
     };
 
     /**
@@ -100,3 +100,4 @@ const SocialShare = (function() {
         share
     };
 })();
+
