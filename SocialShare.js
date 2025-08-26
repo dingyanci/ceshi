@@ -1,116 +1,102 @@
-/**
- * 社交媒体分享库 - SocialShare
- * 功能：提供跨平台的社交媒体分享功能，支持应用内打开和网页回退
- * 使用方法：
- * 1. 引入本脚本
- * 2. 调用 SocialShare.init() 初始化
- * 3. 使用 data-social 属性标记分享按钮
- */
-
 const SocialShare = (function() {
     // 默认配置
-    const defaultConfig = {
+    let config = {
         platforms: {
             facebook: {
                 name: 'Facebook',
-                scheme: 'fb://share?text=分享内容',
+                scheme: 'fb://share?text={text}&link={url}',
                 webUrl: 'https://www.facebook.com/sharer/sharer.php?u={url}',
-                btnId: 'facebook-btn'
+                text: '分享这个内容',
+                url: window.location.href
             },
             twitter: {
                 name: 'Twitter',
-                scheme: 'twitter://post?message=分享内容',
-                webUrl: 'https://twitter.com/intent/tweet?text=分享内容&url={url}',
-                btnId: 'twitter-btn'
+                scheme: 'twitter://post?message={text} {url}',
+                webUrl: 'https://twitter.com/intent/tweet?text={text}&url={url}',
+                text: '看看这个',
+                url: window.location.href
             },
             instagram: {
                 name: 'Instagram',
                 scheme: 'instagram://app',
                 webUrl: 'https://www.instagram.com/',
-                btnId: 'instagram-btn'
+                text: '',
+                url: ''
             },
             youtube: {
                 name: 'YouTube',
-                scheme: 'youtube://channel/UCNTpsgEGxdnURsidXvLbcbA/community',
-                webUrl: 'https://www.youtube.com/channel/UCNTpsgEGxdnURsidXvLbcbA/community',
-                btnId: 'youtube-btn'
+                scheme: 'youtube://',
+                webUrl: 'https://www.youtube.com/',
+                text: '',
+                url: ''
             }
         },
-        url: window.location.href,
-        timeout: 500
+        timeout: 500 // 检测应用是否安装的超时时间(毫秒)
     };
 
-    // 当前配置
-    let config = {};
+    /**
+     * 更新平台配置
+     * @param {string} platform 平台名称
+     * @param {Object} options 新配置
+     */
+    function updatePlatform(platform, options) {
+        if (config.platforms[platform]) {
+            config.platforms[platform] = {
+                ...config.platforms[platform],
+                ...options
+            };
+        }
+    }
 
     /**
-     * 初始化分享库
-     * @param {Object} userConfig 用户自定义配置
+     * 更新所有平台的分享URL
+     * @param {string} url 新的分享URL
      */
-    function init(userConfig = {}) {
-        // 合并配置
-        config = {
-            ...defaultConfig,
-            ...userConfig
-        };
-
-        // 替换URL变量
+    function updateUrl(url) {
         Object.values(config.platforms).forEach(platform => {
-            platform.webUrl = platform.webUrl.replace('{url}', encodeURIComponent(config.url));
-        });
-
-        // 初始化分享按钮
-        initButtons();
-    }
-
-    /**
-     * 初始化分享按钮事件
-     */
-    function initButtons() {
-        Object.values(config.platforms).forEach(app => {
-            const btn = document.getElementById(app.btnId);
-            if (btn) {
-                btn.addEventListener('click', () => {
-                    shareTo(app);
-                });
-            }
+            platform.url = url;
         });
     }
-
 
     /**
      * 分享到指定平台
-     * @param {Object} app 平台配置
+     * @param {string} platform 平台名称
      */
-    function shareTo(app) {
+    function share(platform) {
+        const app = config.platforms[platform];
+        if (!app) return;
+
+        // 替换模板变量
+        const finalUrl = encodeURIComponent(app.url || window.location.href);
+        const finalText = encodeURIComponent(app.text || '');
+        
+        const scheme = app.scheme
+            .replace(/{url}/g, finalUrl)
+            .replace(/{text}/g, finalText);
+            
+        const webUrl = app.webUrl
+            .replace(/{url}/g, finalUrl)
+            .replace(/{text}/g, finalText);
+
         // 尝试打开应用
         const iframe = document.createElement('iframe');
         iframe.style.display = 'none';
-        iframe.src = app.scheme;
+        iframe.src = scheme;
         document.body.appendChild(iframe);
 
         // 设置超时检测
         setTimeout(() => {
             document.body.removeChild(iframe);
-            
-            // 如果应用未安装，则打开网页版
             if (!document.hidden) {
-                window.open(app.webUrl, '_blank');
+                window.open(webUrl, '_blank'); // 回退到网页版
             }
         }, config.timeout);
     }
 
     // 公开API
     return {
-        init,
-        shareTo
+        updatePlatform,
+        updateUrl,
+        share
     };
 })();
-
-// 自动初始化
-document.addEventListener('DOMContentLoaded', () => {
-    SocialShare.init();
-});
-
-
-
