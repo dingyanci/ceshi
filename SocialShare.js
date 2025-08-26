@@ -6,14 +6,14 @@ const SocialShare = (function() {
                 name: 'Facebook',
                 scheme: 'fb://share?text={text}&link={url}',
                 webUrl: 'https://www.facebook.com/sharer/sharer.php?u={url}',
-                text: '分享这个内容',
+                text: 'facebook分享这个内容',
                 url: window.location.href
             },
             twitter: {
                 name: 'Twitter',
                 scheme: 'twitter://post?message={text} {url}',
                 webUrl: 'https://twitter.com/intent/tweet?text={text}&url={url}',
-                text: '看看这个',
+                text: 'twitter看看这个',
                 url: window.location.href
             },
             instagram: {
@@ -29,11 +29,18 @@ const SocialShare = (function() {
                 webUrl: 'https://www.youtube.com/',
                 text: '',
                 url: ''
+            },
+            whatsapp:{
+                name: 'WhatsApp',
+                scheme: 'https://api.whatsapp.com/send?text={text} {url}',
+                webUrl: 'https://web.whatsapp.com/',
+                text: 'WhatsApp分享这个内容',
+                url: window.location.href
             }
         },
         timeout: 800 // 检测应用是否安装的超时时间(毫秒)
     };
-
+    
     /**
      * 更新平台配置
      * @param {string} platform 平台名称
@@ -100,4 +107,5 @@ const SocialShare = (function() {
         share
     };
 })();
+
 
