@@ -38,7 +38,7 @@ const SocialShare = (function() {
                 url: window.location.href
             }
         },
-        timeout : navigator.userAgent.includes('Chrome') ? 1500 : 800,
+        timeout : navigator.userAgent.includes('Chrome') ? 1500 : 600,
     };
     
     /**
@@ -282,6 +282,7 @@ const SocialShare = (function() {
 //         share
 //     };
 // })();
+
 
 
 
