@@ -38,7 +38,13 @@ const SocialShare = (function() {
                 url: window.location.href
             }
         },
-        timeout : 1500,
+        // timeout : navigator.userAgent.includes('Chrome') ? 1500 : 600,
+    };
+    const getTimeout = () => {
+      if (/(Chrome\/|CriOS\/)/.test(navigator.userAgent)) {
+        return 1500; // Chrome系列浏览器
+      }
+      return 600;   // 其他浏览器
     };
     
     /**
@@ -93,11 +99,17 @@ const SocialShare = (function() {
         console.log(config.timeout);
         // 设置超时检测（Google Chrome为1500ms，其他浏览器800ms）
         setTimeout(() => {
-            document.body.removeChild(iframe);
-            if (!document.hidden) {
-                window.open(webUrl, '_blank'); // 回退到网页版
-            }
-        }, config.timeout);
+          document.body.removeChild(iframe);
+          if (!document.hidden) {
+            window.open(webUrl, '_blank');
+          }
+        }, getTimeout());
+        // setTimeout(() => {
+        //     document.body.removeChild(iframe);
+        //     if (!document.hidden) {
+        //         window.open(webUrl, '_blank'); // 回退到网页版
+        //     }
+        // }, getTimeout();
     }
 
     // 公开API
@@ -282,6 +294,7 @@ const SocialShare = (function() {
 //         share
 //     };
 // })();
+
 
 
 
