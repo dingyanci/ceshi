@@ -96,7 +96,7 @@ const SocialShare = (function() {
             if (!document.hidden) {
                 window.open(webUrl, '_blank'); // 回退到网页版
             }
-        }, navigator.userAgent.includes('Chrome') ? 1500 : 800);
+        }, navigator.userAgent.includes('Chrome') ? 2000 : 800);
     }
 
     // 公开API
@@ -281,6 +281,7 @@ const SocialShare = (function() {
 //         share
 //     };
 // })();
+
 
 
 
