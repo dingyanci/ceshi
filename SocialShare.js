@@ -38,7 +38,6 @@ const SocialShare = (function() {
                 url: window.location.href
             }
         },
-        timeout: 900 // 检测应用是否安装的超时时间(毫秒)
     };
     
     /**
@@ -91,13 +90,13 @@ const SocialShare = (function() {
         iframe.src = scheme;
         document.body.appendChild(iframe);
 
-        // 设置超时检测
+        // 设置超时检测（Google Chrome为1500ms，其他浏览器800ms）
         setTimeout(() => {
             document.body.removeChild(iframe);
             if (!document.hidden) {
                 window.open(webUrl, '_blank'); // 回退到网页版
             }
-        }, config.timeout);
+        }, navigator.userAgent.includes('Chrome') ? 1500 : 800);
     }
 
     // 公开API
@@ -282,6 +281,7 @@ const SocialShare = (function() {
 //         share
 //     };
 // })();
+
 
 
 
