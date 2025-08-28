@@ -92,12 +92,12 @@ const SocialShare = (function() {
         document.body.appendChild(iframe);
 
         // 设置超时检测
-        setTimeout(() => {
-            document.body.removeChild(iframe);
-            if (!document.hidden) {
-                window.open(webUrl, '_blank'); // 回退到网页版
-            }
-        }, config.timeout);
+        // setTimeout(() => {
+        //     document.body.removeChild(iframe);
+        //     if (!document.hidden) {
+        //         window.open(webUrl, '_blank'); // 回退到网页版
+        //     }
+        // }, config.timeout);
     }
 
     // 公开API
@@ -282,6 +282,7 @@ const SocialShare = (function() {
 //         share
 //     };
 // })();
+
 
 
 
