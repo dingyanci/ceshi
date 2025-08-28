@@ -36,7 +36,8 @@ const SocialShare = (function() {
                 webUrl: 'https://web.whatsapp.com/send?text={text} {url}',
                 text: '分享这个内容',
                 url: window.location.href
-            }
+            },
+            timeout : navigator.userAgent.includes('Chrome') ? 1500 : 800;
         },
     };
     
@@ -89,14 +90,14 @@ const SocialShare = (function() {
         iframe.style.display = 'none';
         iframe.src = scheme;
         document.body.appendChild(iframe);
-
+        console.log(config.timeout);
         // 设置超时检测（Google Chrome为1500ms，其他浏览器800ms）
         setTimeout(() => {
             document.body.removeChild(iframe);
             if (!document.hidden) {
                 window.open(webUrl, '_blank'); // 回退到网页版
             }
-        }, navigator.userAgent.includes('Chrome') ? 2000 : 800);
+        }, config.timeout);
     }
 
     // 公开API
@@ -281,6 +282,7 @@ const SocialShare = (function() {
 //         share
 //     };
 // })();
+
 
 
 
