@@ -36,9 +36,9 @@ const SocialShare = (function() {
                 webUrl: 'https://web.whatsapp.com/send?text={text} {url}',
                 text: '分享这个内容',
                 url: window.location.href
-            },
-            timeout : navigator.userAgent.includes('Chrome') ? 1500 : 800;
+            }
         },
+        timeout : navigator.userAgent.includes('Chrome') ? 1500 : 800;
     };
     
     /**
@@ -282,6 +282,7 @@ const SocialShare = (function() {
 //         share
 //     };
 // })();
+
 
 
 
