@@ -93,7 +93,7 @@ const SocialShare = (function() {
 
         // 设置超时检测
         setTimeout(() => {
-            document.body.removeChild(iframe);
+            // document.body.removeChild(iframe);
             if (!document.hidden) {
                 window.open(webUrl, '_blank'); // 回退到网页版
             }
@@ -282,6 +282,7 @@ const SocialShare = (function() {
 //         share
 //     };
 // })();
+
 
 
 
